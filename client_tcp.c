@@ -22,8 +22,17 @@ int main(){
 	int con_status = connect(network_socket, (struct sockaddr *) &server_addr, sizeof(server_addr));
 
 	if (con_status == -1){
-		printf("Something went wrong");
+		printf("Something went wrong \n\n");
 	}
 
+
+	// receive data from the server
+	char server_resp[256];
+	recv(network_socket, &server_resp, sizeof(server_resp), 0);
+
+	printf("Receive from server --> %s\n", server_resp);
+
+
+	close(network_socket);
 	return 0;
 }
