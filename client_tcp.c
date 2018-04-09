@@ -26,7 +26,7 @@ int main(){
 
 	// Configration Address for The Socket 
 	server_address.sin_family = AF_INET;
-	server_address.sin_port = htons(9002);
+	server_address.sin_port = htons(9005);
 	server_address.sin_addr = *((struct in_addr *)host->h_addr);
 	bzero(&(server_address.sin_zero),8);
 
