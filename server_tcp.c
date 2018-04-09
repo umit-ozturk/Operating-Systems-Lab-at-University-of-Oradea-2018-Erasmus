@@ -28,8 +28,8 @@ int main(){
 	}
 	// Define The Server Address
 	server_address.sin_family = AF_INET;
-	server_address.sin_port = htons(9005);
-	server_address.sin_addr.s_addr = INADDR_ANY;
+	server_address.sin_port = htons(9002);
+	server_address.sin_addr.s_addr = htonl(INADDR_ANY);
 	bzero(&(server_address.sin_zero),8);
 
 	// Bind The Server Socket to Our IP and Port
@@ -52,15 +52,60 @@ int main(){
 
 		while(1){
 			printf("\n SEND (q OR Q to quit): ");
-			gets(send_data);
-			if (strcmp(send_data, "q") == 0 || strcmp(send_data, "Q") == 0){
+
+			scanf("%s", send_data);
+			if (strcmp(send_data , "q") == 0 || strcmp(send_data , "Q") == 0){
 				// Send Message
 				send(connected, send_data, strlen(send_data), 0);
 				// Close Socket
 				close(connected);
+				break;
 			}
-		}
-	}	
+			else{
+				send(connected, send_data,strlen(send_data), 0);
+			}
 
+			bytes_recieved = recv(connected,recv_data,1024,0);
+			recv_data[bytes_recieved] = '\0';
+
+			if (strcmp(recv_data , "q") == 0 || strcmp(recv_data , "Q") == 0){
+				
+				close(connected);
+			}
+			else{
+				printf("\n RECIEVED DATA = %s " , recv_data);
+			}
+			fflush(stdout);
+		}
+	}
+	close(server_socket);
 	return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
